@@ -13,8 +13,8 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">Note Taker
+  <nav class="navbar">
+    <a class="navbar-brand" id="navColor" href="/">Note Taker
     </a>
     <div class="icons">
       <i class="fas fa-save text-light save-note"></i>
@@ -25,11 +25,11 @@
     <div class="row">
       <div class="col-4 list-container">
         <div class="card">
-          <ul class="list-group">
+          <ul class="list-group" id="card">
           </ul>
         </div>
       </div>
-      <div class="col-8">
+      <div class="col-8" id="noteNew">
         <input class="note-title" placeholder="Note Title" maxlength="28" type="text">
         <textarea class="note-textarea" placeholder="Note Text"></textarea>
       </div>

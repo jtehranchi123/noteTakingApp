@@ -1,8 +1,11 @@
 const express = require('express');
-const notes = require('./db/db.json');
+let notes = require('./db/db.json');
 const app = express();
 const fs = require('fs');
 const path = require('path');
+const {uid} = require('uid');
+const { listen } = require('express/lib/application');
+const { listenerCount } = require('stream');
 
 
 
@@ -24,7 +27,11 @@ app.get('/api/notes', (req, res) => {
 });
 
 app.post('/api/notes', (req, res) => {
-    const newNote = req.body;
+    const newNote = {
+        title: req.body.title,
+        text: req.body.text,
+        id: uid(10),
+    }
     notes.push(newNote);
     fs.writeFile(path.join(__dirname, 'db/db.json'), JSON.stringify(notes), (err) => {
         if (err) { console.log(err)}
@@ -33,8 +40,7 @@ app.post('/api/notes', (req, res) => {
 });
 
 app.delete('/api/notes/:id', (req, res) => {
-    const id = req.params.id;
-    notes.splice(id, 1);
+    notes = notes.filter(note => note.id !== req.params.id);
     fs.writeFile(path.join(__dirname, 'db/db.json'), JSON.stringify(notes), (err) => {
         if (err) { console.log(err)}
         res.sendStatus(200);
